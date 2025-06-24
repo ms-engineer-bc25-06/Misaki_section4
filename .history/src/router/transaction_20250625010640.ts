@@ -1,6 +1,18 @@
 import express, { RequestHandler } from "express";
+// import { Router, RequestHandler } from "express";
 
 const router = express.Router();
+// const router = Router();
+
+// const getTransactions: RequestHandler = (req, res) => {
+//   res.json([
+//     { id: 1, date: "2025-06-01", type: "expense", category: "食費", amount: 1500 },
+//   ]);
+// };
+
+// router.get("/", getTransactions);
+
+// export default router;
 
 // 型定義
 type Transaction = {
