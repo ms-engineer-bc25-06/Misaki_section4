@@ -1,5 +1,4 @@
 import express from 'express';
-import cors from 'cors'; 
 
 import userRouter from './router/user';
 
@@ -7,9 +6,6 @@ import transactionRouter from'./router/transaction';
 // express
 const app = express();
 const port = 4000;
-
-//Next.jsアクセス許可
-app.use(cors());
 
 //ミドルウェア（リクエストの内容をJSON形式で受け取る設定）
 app.use(express.json());
@@ -20,7 +16,6 @@ app.use('/user', userRouter);
 app.use('/api/transactions', transactionRouter);
 
 // http://localhost:4000(GET)にアクセスした際の処理
-
 app.get('/', (req, res) => {
   res.send('Hello World!');
 });

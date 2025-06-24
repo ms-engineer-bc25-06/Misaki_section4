@@ -20,7 +20,6 @@ app.use('/user', userRouter);
 app.use('/api/transactions', transactionRouter);
 
 // http://localhost:4000(GET)にアクセスした際の処理
-
 app.get('/', (req, res) => {
   res.send('Hello World!');
 });
