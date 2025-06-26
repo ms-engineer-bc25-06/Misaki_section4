@@ -8,31 +8,31 @@ const router = express.Router();
 // 型定義
 type Transaction = {
   id: number;
-  date: Date;
-  type: string;   
+  date: string;
+  type: "income" | "expense";
   category: string;
   amount: number;
-  memo?: string | null;
+  memo?: string;
 };
 
 let transactions: Transaction[] = [
   {
     id: 1,
-    date: new Date("2025-06-01"),
+    date: "2025-06-01",
     type: "expense",
     category: "食費",
     amount: 1500,
   },
   {
     id: 2,
-    date: new Date("2025-06-02"),
+    date: "2025-06-02",
     type: "income",
     category: "給料",
     amount: 250000,
   },
   {
     id: 3,
-    date: new Date("2025-06-18"),
+    date: "2025-06-18",
     type: "expense",
     category: "光熱費",
     amount: 7000,
@@ -93,7 +93,7 @@ try {
 // 更新
 router.put("/:id", async (req, res) => {
   const id = Number(req.params.id);
-  const { error, value} = transactionSchema.validate(req.body);
+  const { error, value} = transactionsSchema.validata(req.body);
 
   if (error) {
     res.status(400).json({ error: "バリデーションエラー" ,

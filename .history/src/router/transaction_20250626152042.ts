@@ -9,10 +9,10 @@ const router = express.Router();
 type Transaction = {
   id: number;
   date: Date;
-  type: string;   
+  type: "income" | "expense";
   category: string;
   amount: number;
-  memo?: string | null;
+  memo?: string;
 };
 
 let transactions: Transaction[] = [

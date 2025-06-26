@@ -12,7 +12,7 @@ type Transaction = {
   type: string;   
   category: string;
   amount: number;
-  memo?: string | null;
+  memo?: string;
 };
 
 let transactions: Transaction[] = [
