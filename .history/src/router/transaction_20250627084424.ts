@@ -2,9 +2,18 @@ import express, { RequestHandler } from "express";
 import prisma from '../lib/prismaClient'  // ← Prisma Client をインポート
 import { transactionSchema } from '../validators/transactionValidator';// バリデーションスキーマ
 import Joi from 'joi'; 
-import { Transaction } from '@prisma/client';//prismaから型を使う
 
 const router = express.Router();
+
+// 型定義
+type Transaction = {
+  id: number;
+  date: Date;
+  type: string;   
+  category: string;
+  amount: number;
+  memo?: string | null;
+};
 
 // 一覧取得
 router.get('/', async (req, res) => {
@@ -15,6 +24,8 @@ router.get('/', async (req, res) => {
    res.status(500).json({error:"データ取得に失敗しました"});
   }
 });
+
+
 
 // 詳細取得
 router.get("/:id",async (req, res) => {
@@ -70,7 +81,7 @@ router.put("/:id", async (req, res) => {
   }
 
   try {
-  const updatedTransaction = await prisma.transaction.update({
+  const updatedTransaction: Transaction = await prisma.transaction.update({
       where: { id },
       data: value,
     });

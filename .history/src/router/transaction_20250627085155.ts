@@ -16,6 +16,8 @@ router.get('/', async (req, res) => {
   }
 });
 
+
+
 // 詳細取得
 router.get("/:id",async (req, res) => {
   const id = Number(req.params.id);
@@ -70,7 +72,7 @@ router.put("/:id", async (req, res) => {
   }
 
   try {
-  const updatedTransaction = await prisma.transaction.update({
+  const updatedTransaction: Transaction = await prisma.transaction.update({
       where: { id },
       data: value,
     });

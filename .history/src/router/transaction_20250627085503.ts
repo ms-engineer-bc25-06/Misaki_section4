@@ -70,7 +70,7 @@ router.put("/:id", async (req, res) => {
   }
 
   try {
-  const updatedTransaction = await prisma.transaction.update({
+  const updatedTransaction: Transaction = await prisma.transaction.update({
       where: { id },
       data: value,
     });
