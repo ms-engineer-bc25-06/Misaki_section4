@@ -1,0 +1,20 @@
+# 依存関係
+node_modules/
+
+# 環境変数
+.env
+
+# Prisma自動生成
+/src/generated/
+/prisma/migrations/
+
+# TypeScriptの出力
+dist/
+build/
+
+# VSCodeなど開発用
+.history/
+.vscode/
+
+# ログファイル
+*.log
