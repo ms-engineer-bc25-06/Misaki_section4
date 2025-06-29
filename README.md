@@ -25,11 +25,19 @@ docker-compose up -d
 | DELETE   | /api/transactions/:id | 削除         |
 
 ## github
-- git add .
-- git commit -m " "
-- git push
+```
+ git add .
+```
+```
+git commit -m " "
+```
+```
+git push
+```
 
 ## DBのマイグレーション
+```
 npx prisma migrate status
+```
 http://localhost:5555
 
