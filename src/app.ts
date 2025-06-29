@@ -6,9 +6,8 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 
-import userRouter from './router/user';
-
-import transactionRouter from'./router/transaction';
+import userRouter from './routers/user';
+import transactionRouter from'./routers/transaction';
 
 
 // loggerの設定

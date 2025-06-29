@@ -1,5 +1,5 @@
 import express, { RequestHandler } from "express";
-import prisma from '../lib/prismaClient'  // ← Prisma Client をインポート
+import prisma from '../libs/prismaClient'  // ← Prisma Client をインポート
 import { transactionSchema } from '../validators/transactionValidator';// バリデーションスキーマ
 import Joi from 'joi'; 
 import { Transaction } from '@prisma/client';//prismaから型を使う
@@ -35,7 +35,6 @@ router.get("/:id",async (req, res) => {
 });
 
 // 新規作成
-//joiを使用
 router.post("/",async(req, res) => {
 const { error, value } = transactionSchema.validate(req.body);
 
