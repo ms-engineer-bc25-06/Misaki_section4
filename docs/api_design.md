@@ -35,7 +35,7 @@
     "type": "expense",
     "category": "食費",
     "amount": -1500,
-    "memo": "スーパー"
+    "note": "スーパー"
   }
 ]
 ```
@@ -50,7 +50,7 @@
   "type": "income",
   "category": "給料",
   "amount": 250000,
-  "memo": "5月分"
+  "note": "5月分"
 }
 ```
 - レスポンス例:
@@ -62,7 +62,7 @@
     "type": "income",
     "category": "給料",
     "amount": 250000,
-    "memo": "５月分"
+    "note": "５月分"
   }
 ]
 ```
@@ -75,7 +75,7 @@
   "type": "expense",
   "category": "食費",
   "amount": -4000,
-  "memo": 
+  "note": 
 }
 ```
 - レスポンス例:
@@ -86,7 +86,7 @@
   "type": "expense",
   "category": "外食",
   "amount": -4000,
-  "memo":
+  "note":
 }
 ```
 

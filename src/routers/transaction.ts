@@ -1,8 +1,7 @@
-import express, { RequestHandler } from "express";
+import express from "express";
 import prisma from '../libs/prismaClient'  // ← Prisma Client をインポート
 import { transactionSchema } from '../validators/transactionValidator';// バリデーションスキーマ
 import Joi from 'joi'; 
-import { Transaction } from '@prisma/client';//prismaから型を使う
 
 const router = express.Router();
 
@@ -11,7 +10,7 @@ router.get('/', async (req, res) => {
   try {
   const transactions = await prisma.transaction.findMany();
   res.json(transactions);
-  } catch (error) {
+  } catch (error){
    res.status(500).json({error:"データ取得に失敗しました"});
   }
 });
@@ -20,10 +19,7 @@ router.get('/', async (req, res) => {
 router.get("/:id",async (req, res) => {
   const id = Number(req.params.id);
   try {
-  const transaction = await prisma.transaction.findUnique({
-  where: { id },
-});
-
+  const transaction = await prisma.transaction.findUnique({where: { id },});
   if (!transaction) {
     res.status(404).json({ error: "Not found" });
     return;
@@ -41,7 +37,7 @@ const { error, value } = transactionSchema.validate(req.body);
 if (error) {
   res.status(400).json({
     error: 'バリデーションエラー',
-    details: error.details.map((d: Joi.ValidationErrorItem) => d.message),
+    details: error.details.map(d => d.message)
   });
   return;
 }
@@ -67,7 +63,6 @@ router.put("/:id", async (req, res) => {
   });
   return;
   }
-
   try {
   const updatedTransaction = await prisma.transaction.update({
       where: { id },
@@ -84,9 +79,7 @@ router.put("/:id", async (req, res) => {
 router.delete("/:id", async (req, res) => {
   const id = Number(req.params.id);
   try {
-    await prisma.transaction.delete({
-      where: { id },
-    });
+    await prisma.transaction.delete({where: { id },});
     res.json({ message: "Deleted successfully" });
   } catch (error) {
     res.status(404).json({ error: "Not found or 削除に失敗しました" });

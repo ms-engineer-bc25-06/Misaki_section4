@@ -9,8 +9,8 @@ const joi_1 = __importDefault(require("joi"));
 // 入出金データのバリデーションスキーマ
 exports.transactionSchema = joi_1.default.object({
     date: joi_1.default.string().isoDate().required(), // ISO形式の日付（例：2025-06-25）
-    type: joi_1.default.string().valid('income', 'expense').required(), // 入金 or 出金
+    type: joi_1.default.string().valid('収入', '支出').required(), // 入金 or 出金
     category: joi_1.default.string().required(), // カテゴリ（必須）
     amount: joi_1.default.number().positive().required(), // 金額（正の数）
-    memo: joi_1.default.string().allow('').optional(), // メモ（空文字もOK）
+    note: joi_1.default.string().allow('').optional(), // メモ（空文字もOK）
 });

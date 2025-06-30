@@ -39,5 +39,12 @@ git push
 ```
 npx prisma migrate status
 ```
+```
+npx prisma studio
+```
 http://localhost:5555
 
+## Prisma Client を更新
+```
+npx prisma generate
+```
