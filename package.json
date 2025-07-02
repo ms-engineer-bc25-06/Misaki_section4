@@ -1,11 +1,13 @@
 {
   "name": "kakeibo_api",
   "version": "1.0.0",
+  "type": "module",
   "main": "index.js",
   "scripts": {
-    "dev": "ts-node src/app.ts",
+    "dev": "NODE_OPTIONS='--loader ts-node/esm --no-warnings' ts-node src/app.ts",
     "build": "tsc",
-    "start": "node build/app.js"
+    "start": "node build/app.js",
+    "lint": "eslint . --ext .js,.ts --ignore-path .gitignore"
   },
   "keywords": [],
   "author": "",
@@ -21,13 +23,21 @@
     "winston": "^3.17.0"
   },
   "devDependencies": {
+    "@eslint/eslintrc": "^2.1.4",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.3",
     "@types/joi": "^17.2.2",
     "@types/morgan": "^1.9.10",
     "@types/node": "^24.0.3",
+    "@typescript-eslint/eslint-plugin": "^8.35.1",
+    "@typescript-eslint/parser": "^8.35.1",
+    "eslint": "^8.57.1",
+    "eslint-config-prettier": "^10.1.5",
+    "eslint-plugin-prettier": "^5.5.1",
+    "prettier": "^3.6.2",
     "prisma": "^6.10.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.3"
-  }
+  },
+  "type": "module"
 }

@@ -1,24 +1,24 @@
 import express from 'express';
-import cors from 'cors'; 
+import cors from 'cors';
 import morgan from 'morgan';
 import winston from 'winston';
 import dotenv from 'dotenv';
 dotenv.config();
 
-
-import userRouter from './routers/user';
-import transactionRouter from'./routers/transaction';
-
+import userRouter from './routers/user.js';
+import transactionRouter from './routers/transaction.js';
 
 // loggerの設定
 const logger = winston.createLogger({
-  level:process.env.LOG_LEVEL || 'info', //環境変数から取得なければ info
-  format:winston.format.combine(
-    winston.format.timestamp(),//タイムスタンプ
-    winston.format.colorize(),//色付け（開発時のみ）
-    //winston.format.json(),//本番ログ　JSON形式
-    winston.format.printf(({ timestamp, level, message }) => `[${timestamp}] ${level}: ${message}`)//見やすくするため（開発時のみ）
-),
+  level: process.env.LOG_LEVEL || 'info', //環境変数から取得なければ info
+  format: winston.format.combine(
+    winston.format.timestamp(), //タイムスタンプ
+    winston.format.colorize(), //色付け（開発時のみ）
+    //winston.format.json(),//本番ログJSON形式
+    winston.format.printf(
+      ({ timestamp, level, message }) => `[${timestamp}] ${level}: ${message}`,
+    ), //見やすくするため（開発時のみ）
+  ),
   transports: [new winston.transports.Console()],
 });
 
@@ -58,11 +58,17 @@ app.get('/error', (req, res, next) => {
 });
 
 // エラーハンドラ
-app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
-  logger.error(`エラー: ${err.message}`);
-  res.status(500).json({ message: 'Internal Server Error' });
-});
-
+app.use(
+  (
+    err: Error,
+    req: express.Request,
+    res: express.Response,
+    _next: express.NextFunction,
+  ) => {
+    logger.error(`エラー: ${err.message}`);
+    res.status(500).json({ message: 'Internal Server Error' });
+  },
+);
 
 // 確認用
 app.listen(port, () => {

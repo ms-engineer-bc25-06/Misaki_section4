@@ -8,6 +8,5 @@ export const transactionSchema = Joi.object({
   type: Joi.string().valid('income', 'expense').required(), // 入金 or 出金
   category: Joi.string().required(), // カテゴリ（必須）
   amount: Joi.number().positive().required(), // 金額（正の数）
-  memo: Joi.string().allow('').optional(), // メモ（空文字もOK）
+  note: Joi.string().allow('').optional(), // メモ（空文字もOK）
 });
-
