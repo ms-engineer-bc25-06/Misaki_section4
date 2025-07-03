@@ -9,6 +9,7 @@ module.exports = {
   env: {
     node: true,
     es2020: true,
+    vitest: true,
   },
   extends: [
     'eslint:recommended',
