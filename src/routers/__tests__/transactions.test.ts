@@ -25,19 +25,19 @@ const UPDATED_TRANSACTION_DATA = {
   note: '今月の給料',
 };
 
-// --- テストスイートの開始 ---
+// --- テスト開始 ---
 describe('Transactions API', () => {
   // 各テストの前に実行される処理
   beforeEach(async () => {
     await prisma.transaction.deleteMany({}); // 既存のデータを全て削除
   });
 
-  // 各テストスイートの終了時に実行される処理
+  // 各テスト終了時に実行される処理
   afterAll(async () => {
     await prisma.$disconnect(); // 全てのテストが完了したら、データベース接続を閉じる
   });
 
-  // --- GET /api/transactions ---
+  // --- 取得 /api/transactions ---
   describe('GET /api/transactions', () => {
     it('should return an empty array if no transactions exist', async () => {
       const response = await request(app).get('/api/transactions');
@@ -64,21 +64,19 @@ describe('Transactions API', () => {
       expect(response.statusCode).toBe(200);
       expect(response.body).toBeInstanceOf(Array);
       expect(response.body.length).toBe(2);
-      // APIから返ってくるdateはYYYY-MM-DD形式に整形されているので、TEST_TRANSACTIONのdate文字列と一致することを期待
       expect(response.body[0].date).toBe(TEST_TRANSACTION.date);
       expect(response.body[0].category).toBe(TEST_TRANSACTION.category);
     });
   });
 
-  // --- POST /api/transactions ---
+  // --- 新規作成 /api/transactions ---
   describe('POST /api/transactions', () => {
     it('should create a new transaction with valid data', async () => {
       const response = await request(app)
         .post('/api/transactions')
-        .send(TEST_TRANSACTION); // APIにはYYYY-MM-DD文字列を送信
+        .send(TEST_TRANSACTION);
 
       expect(response.statusCode).toBe(201);
-      // APIから返ってくるdateはYYYY-MM-DD形式に整形されているので、TEST_TRANSACTIONとそのまま比較
       expect(response.body).toMatchObject(TEST_TRANSACTION);
       expect(response.body).toHaveProperty('id');
 
@@ -102,9 +100,8 @@ describe('Transactions API', () => {
         .send(invalidData);
 
       expect(response.statusCode).toBe(400);
-      // API側で返すZodのエラー形式に合わせる
       expect(response.body.error).toBe('バリデーションエラー');
-      expect(response.body.details).toContain('Required'); // Zodのデフォルトメッセージ
+      expect(response.body.details).toContain('Required');
     });
 
     it('should return 400 for invalid data types', async () => {
@@ -114,7 +111,6 @@ describe('Transactions API', () => {
         .send(invalidData);
 
       expect(response.statusCode).toBe(400);
-      // API側で返すZodのエラー形式に合わせる
       expect(response.body.details).toContain(
         'Expected number, received string',
       );
@@ -127,14 +123,13 @@ describe('Transactions API', () => {
         .send(invalidData);
 
       expect(response.statusCode).toBe(400);
-      // API側で返すZodのエラー形式に合わせる
       expect(response.body.details).toContain(
         'Amount must be a positive number',
       );
     });
   });
 
-  // --- GET /api/transactions/:id ---
+  // --- 取得 /api/transactions/:id ---
   describe('GET /api/transactions/:id', () => {
     let createdTransaction: any;
 
@@ -173,7 +168,7 @@ describe('Transactions API', () => {
     });
   });
 
-  // --- PUT /api/transactions/:id ---
+  // --- 更新 /api/transactions/:id ---
   describe('PUT /api/transactions/:id', () => {
     let createdTransaction: any;
 
@@ -227,7 +222,7 @@ describe('Transactions API', () => {
     });
   });
 
-  // --- DELETE /api/transactions/:id ---
+  // --- 消す /api/transactions/:id ---
   describe('DELETE /api/transactions/:id', () => {
     let createdTransaction: any;
 
@@ -258,7 +253,7 @@ describe('Transactions API', () => {
       );
 
       expect(response.statusCode).toBe(404); // API側で404を返すように修正したため
-      expect(response.body.error).toBe('Not found or 削除に失敗しました'); // API側で返すメッセージに合わせる
+      expect(response.body.error).toBe('削除失敗'); // API側で返すメッセージに合わせる
     });
   });
 });
