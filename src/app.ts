@@ -1,3 +1,5 @@
+// src/app.ts
+
 import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
@@ -42,11 +44,9 @@ app.use(express.json());
 
 //ここにエンドポイントを追加していく（内容はrouterの中に記載）
 app.use('/user', userRouter);
-
-app.use('/api/transactions', transactionRouter);
+app.use('/api/transactions', transactionRouter); // transactionRouter をミドルウェアとして使用
 
 // http://localhost:4000(GET)にアクセスした際の処理
-
 app.get('/', (req, res) => {
   logger.debug('GET / にアクセスされました'); // ← ここにログ追加
   res.send('Hello World!!');
@@ -70,7 +70,13 @@ app.use(
   },
 );
 
-// 確認用
-app.listen(port, () => {
-  logger.info(`Server running on http://localhost:${port}`);
-});
+//テストファイルからappにインポート
+export default app;
+
+// アプリケーションがテスト環境でない場合のみサーバーを起動
+if (process.env.NODE_ENV !== 'test') {
+  // 環境変数 NODE_ENV が 'test' でない場合
+  app.listen(port, () => {
+    logger.info(`Server running on http://localhost:${port}`); // URLの重複を修正
+  });
+}

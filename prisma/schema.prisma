@@ -9,7 +9,7 @@ datasource db {
 
 model Transaction {
   id       Int     @id @default(autoincrement())
-  date     String
+  date     DateTime @default(now())
   type     String
   category String
   amount   Int

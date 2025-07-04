@@ -1,16 +1,13 @@
-"use strict";
 // src/validators/transactionValidator.ts
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.transactionSchema = void 0;
-const joi_1 = __importDefault(require("joi"));
-// 入出金データのバリデーションスキーマ
-exports.transactionSchema = joi_1.default.object({
-    date: joi_1.default.string().isoDate().required(), // ISO形式の日付（例：2025-06-25）
-    type: joi_1.default.string().valid('収入', '支出').required(), // 入金 or 出金
-    category: joi_1.default.string().required(), // カテゴリ（必須）
-    amount: joi_1.default.number().positive().required(), // 金額（正の数）
-    note: joi_1.default.string().allow('').optional(), // メモ（空文字もOK）
+import { z } from 'zod'; // Zodをインポート
+// 入出金データのバリデーションスキーマ (Zod版)
+export const transactionSchema = z.object({
+    // 日付はYYYY-MM-DD形式の文字列を期待
+    date: z
+        .string()
+        .regex(/^\d{4}-\d{2}-\d{2}$/, 'Date must be in YYYY-MM-DD format'), // .required() を削除
+    type: z.enum(['収入', '支出']), // .required() を削除
+    category: z.string().min(1, 'Category cannot be empty'), // .required() を削除
+    amount: z.number().positive('Amount must be a positive number'), // .required() を削除
+    note: z.string().optional(), // メモ（省略可能、空文字も含む）
 });

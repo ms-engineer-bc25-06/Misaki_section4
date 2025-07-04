@@ -25,5 +25,6 @@ module.exports = {
         caughtErrorsIgnorePattern: '^_', // catchブロックのエラー変数を無視
       },
     ],
+    'prettier/prettier': 'error',
   },
 };
